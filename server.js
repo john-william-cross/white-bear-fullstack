@@ -28,7 +28,16 @@ connection.query(selectUser("mike@gmail.com", "replace_me"), (err, res) => {
    }
 });
 
+app.get("/", (req, res) => {
+   res.send("Hello World!");
+});
+
 connection.end();
+
+const port = process.env.PORT || 3044;
+app.listen(port, () => {
+   console.log(`Server Running at http://localhost:${port}`);
+});
 
 // if you needed any other info from the user, i.e. gender, username, etc. return that as well because it will
 // need to be stored inside of the redux state
