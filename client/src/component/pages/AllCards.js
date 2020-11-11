@@ -19,7 +19,7 @@ export default class AllCards extends React.Component {
    componentDidMount() {
       axios
          .get(
-            "http://localhost:3044/api/v1/memory-cards?userId=f79eddaf-f93d-4e49-8977-24a0681932b0&&order=%60memory_cards%60.%60created_at%60%20DESC"
+            "/api/v1/memory-cards?userId=f79eddaf-f93d-4e49-8977-24a0681932b0&&order=%60memory_cards%60.%60created_at%60%20DESC"
          )
          .then((res) => {
             // handle success
