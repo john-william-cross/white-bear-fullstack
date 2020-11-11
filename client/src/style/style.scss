@@ -1,0 +1,140 @@
+/*
+
+I've included a class called .background-image that is how you can perfectly fill a webpage with a background image.
+(It's a pain in the butt to google this. I included the best link I found in the solution.)
+
+Then on your HTML file, create a div that wraps your entire content on the landing page and give it this class.
+
+Example:
+
+<div class="background-image">
+   <div class="container">
+      <!-- More html here -->
+   </div>
+</div>
+
+*/
+
+.landing-page-logo {
+   @include media-breakpoint-only(xs) {
+      margin-top: -20px !important;
+      margin-right: 5px !important;
+      width: 75px;
+   }
+   @include media-breakpoint-only(sm) {
+   }
+   @include media-breakpoint-only(md) {
+   }
+   @include media-breakpoint-only(lg) {
+   }
+   @include media-breakpoint-only(xl) {
+   }
+}
+.landing-page-title {
+   @include media-breakpoint-only(xs) {
+      font-size: 40px;
+   }
+   @include media-breakpoint-only(sm) {
+   }
+   @include media-breakpoint-only(md) {
+   }
+   @include media-breakpoint-only(lg) {
+   }
+   @include media-breakpoint-only(xl) {
+   }
+}
+
+.text-brand {
+   font-family: $font-family-brand;
+}
+
+.btn-group .btn {
+   font-weight: $font-weight-normal;
+}
+
+.btn-link {
+   font-weight: $font-weight-bold;
+   padding-left: 0; //taking away the padding negated the need of clearfix class
+   padding-right: 0;
+   border: none;
+}
+
+.card-body {
+   color: $white;
+   font-family: $font-family-serif;
+}
+
+.card-body.bg-primary {
+   //no space between card-body and .bg-primary because .bg-primary is not nested under .card-body; they are in the same line
+   border-top-left-radius: $border-radius;
+   border-top-right-radius: $border-radius;
+}
+
+.card-body.bg-secondary {
+   border-bottom-left-radius: $border-radius;
+   border-bottom-right-radius: $border-radius;
+}
+
+.background-image {
+   /* https://css-tricks.com/perfect-full-page-background-image/ */
+   background: url("../img/background-landing.jpg") no-repeat center center
+      fixed;
+   background-size: cover;
+   min-height: 100vh;
+}
+
+.tab-active {
+   background-color: $dark;
+   border: $border-width $dark solid;
+}
+
+.tab-separator {
+   border-left: 1px $dark solid;
+}
+
+textarea {
+   width: 100%;
+   background-color: transparent;
+   color: $white;
+
+   // remove all styling https://stackoverflow.com/a/17110012/11047944
+   border: none;
+   overflow: auto;
+   outline: none;
+   -webkit-box-shadow: none;
+   -moz-box-shadow: none;
+   box-shadow: none;
+   resize: none;
+}
+
+.bg-success,
+.bg-danger {
+   color: $white;
+}
+
+h1 {
+   color: $white;
+   font-family: $font-family-brand;
+   margin-top: 50px;
+}
+
+.font-sans-serif {
+   font-family: $font-family-sans-serif;
+}
+
+button {
+   font-weight: $font-weight-normal;
+}
+
+.font-serif {
+   font-family: $font-family-serif;
+}
+
+.sign-up {
+   color: $blue;
+}
+
+.disabled {
+   pointer-events: auto !important;
+   cursor: not-allowed;
+}
