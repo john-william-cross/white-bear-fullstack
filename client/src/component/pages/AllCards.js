@@ -95,10 +95,10 @@ export default class AllCards extends React.Component {
                      <option value="memory_cards.created_at%20ASC">
                         Oldest
                      </option>
-                     <option value='[["totalSuccessfulAttempts", "createdAt"], ["asc", "asc"]]'>
+                     <option value="memory_cards.total_successful_attempts%20ASC,%20memory_cards.created_at%20ASC">
                         Hardest
                      </option>
-                     <option value='[["totalSuccessfulAttempts", "createdAt"], ["desc", "desc"]]'>
+                     <option value="memory_cards.total_successful_attempts%20DESC,%20memory_cards.created_at%20DESC">
                         Easiest
                      </option>
                   </select>
