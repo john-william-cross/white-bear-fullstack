@@ -37,6 +37,8 @@ export default class AllCards extends React.Component {
          });
    }
 
+   //comment for commit
+
    setMemoryCards() {
       axios
          .get(
