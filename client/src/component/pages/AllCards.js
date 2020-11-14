@@ -1,65 +1,23 @@
 import React from "react";
 import AppTemplate from "../ui/AppTemplate";
 import MemoryCard from "../ui/MemoryCard";
-import orderBy from "lodash/orderBy";
 import axios from "axios";
+const userId = "f79eddaf-f93d-4e49-8977-24a0681932b0";
 
 export default class AllCards extends React.Component {
    constructor(props) {
       super(props);
 
       this.state = {
-         order: '[["createdAt"], ["desc"]]',
-         displayedMemoryCards: [],
-         allMemoryCards: [],
+         order: "memory_cards.created_at%20DESC",
+         memoryCards: [],
+         searchTerm: "",
       };
    }
 
    //componentDidMount is a lifecycle method like render, you don't have to call it; react uses it automatically
    componentDidMount() {
-      axios
-         .get(
-            "/api/v1/memory-cards?userId=f79eddaf-f93d-4e49-8977-24a0681932b0&searchTerm=to&&order=%60memory_cards%60.%60created_at%60%20DESC"
-         )
-         .then((res) => {
-            // handle success
-            console.log(res.data);
-            const memoryCards = res.data;
-            this.setState({
-               //change the state with this.setState
-               displayedMemoryCards: orderBy(
-                  memoryCards,
-                  ["createdAt"],
-                  ["desc"]
-               ),
-               allMemoryCards: orderBy(memoryCards, ["createdAt"], ["desc"]),
-            });
-         })
-         .catch((error) => {
-            // handle error
-            console.log(error);
-         });
-   }
-
-   filterByInput() {
-      const input = document.getElementById("search-input").value;
-      const lowerCasedInput = input.toLowerCase();
-      console.log(lowerCasedInput);
-      const copyOfAllMemoryCards = [...this.state.allMemoryCards];
-      const filteredMemoryCards = copyOfAllMemoryCards.filter((memoryCard) => {
-         const lowerCasedImagery = memoryCard.imagery.toLowerCase();
-         const lowerCasedAnswer = memoryCard.answer.toLowerCase();
-         if (
-            lowerCasedImagery.includes(lowerCasedInput) ||
-            lowerCasedAnswer.includes(lowerCasedInput)
-         ) {
-            console.log(`match`);
-            return true;
-         } else return false;
-      });
-      this.setState({ displayedMemoryCards: filteredMemoryCards }, () => {
-         this.setMemoryCards();
-      });
+      this.setMemoryCards();
    }
 
    setOrder(e) {
@@ -70,16 +28,31 @@ export default class AllCards extends React.Component {
       });
    }
 
+   setSearchTerm() {
+      const searchInput = document.getElementById("search-input");
+      this.setState =
+         ({ searchTerm: searchInput },
+         () => {
+            this.setMemoryCards();
+         });
+   }
+
    setMemoryCards() {
-      console.log("setting memory cards");
-      const copyOfDisplayedMemoryCards = [...this.state.displayedMemoryCards];
-      // turn this string into an array
-      const toJson = JSON.parse(this.state.order);
-      console.log(...toJson);
-      // use spread syntax to spread the contents of the array into the order by function
-      const orderedMemoryCards = orderBy(copyOfDisplayedMemoryCards, ...toJson);
-      console.log(orderedMemoryCards);
-      this.setState({ displayedMemoryCards: orderedMemoryCards });
+      axios
+         .get(
+            `/api/v1/memory-cards?userId=${userId}&searchTerm=${this.state.searchTerm}&order=${this.state.order}`
+         )
+         .then((res) => {
+            // handle success
+            console.log(res.data);
+            this.setState({
+               memoryCards: res.data,
+            });
+         })
+         .catch((error) => {
+            // handle error
+            console.log(error);
+         });
    }
 
    render() {
@@ -98,7 +71,7 @@ export default class AllCards extends React.Component {
                <div className="col-4">
                   <button
                      className="btn btn-primary btn-block btn-sm"
-                     onClick={() => this.filterByInput()}
+                     onClick={() => this.setSearchTerm()}
                   >
                      Search
                   </button>
@@ -116,10 +89,12 @@ export default class AllCards extends React.Component {
                      onChange={(e) => this.setOrder(e)}
                   >
                      {/* option values can ONLY be strings */}
-                     <option value='[["createdAt"], ["desc"]]'>
+                     <option value="memory_cards.created_at%20DESC">
                         Most recent
                      </option>
-                     <option value='[["createdAt"], ["asc"]]'>Oldest</option>
+                     <option value="memory_cards.created_at%20ASC">
+                        Oldest
+                     </option>
                      <option value='[["totalSuccessfulAttempts", "createdAt"], ["asc", "asc"]]'>
                         Hardest
                      </option>
@@ -130,7 +105,7 @@ export default class AllCards extends React.Component {
                </div>
             </div>
 
-            {this.state.displayedMemoryCards.map((memoryCard) => {
+            {this.state.memoryCards.map((memoryCard) => {
                return <MemoryCard card={memoryCard} key={memoryCard.id} />;
             })}
          </AppTemplate>
