@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
-import hash from "object-hash";
 import { v4 as getUuid } from "uuid";
 import { EMAIL_REGEX } from "../../utils/helpers";
 import { connect } from "react-redux";
@@ -105,6 +104,7 @@ class SignUp extends React.Component {
             createdAt: Date.now(),
          };
          // post to API
+
          // Update currentUser in global state with API response
          // Go to next page:  this.props.history.push("/create-answer");
       }

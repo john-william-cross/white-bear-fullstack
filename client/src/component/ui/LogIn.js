@@ -2,7 +2,6 @@ import React from "react";
 import classnames from "classnames";
 import { v4 as getUuid } from "uuid";
 import { withRouter } from "react-router-dom";
-import hash from "object-hash";
 import { EMAIL_REGEX } from "../../utils/helpers";
 import axios from "axios";
 import actions from "../../store/actions";
@@ -67,7 +66,7 @@ class LogIn extends React.Component {
             id: getUuid(),
             email: emailInput,
             createdAt: Date.now(),
-            password: hash(passwordInput),
+            password: passwordInput,
          };
          console.log("Created user object for POST: ", user);
          // Mimic API response:
