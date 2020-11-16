@@ -155,9 +155,7 @@ class SignUp extends React.Component {
                               <p className="sign-up mt-1 mb-3">
                                  Let's get you signed up.
                               </p>
-                              <p className="lead text-muted mt-2">
-                                 Email address
-                              </p>
+                              <p className="lead mt-2">Email address</p>
 
                               <input
                                  id="signup-email-input"
@@ -177,8 +175,12 @@ class SignUp extends React.Component {
                                  className="text-danger mb-4"
                                  id="sign-up-email-error"
                               ></p>
-                              <p className="lead text-muted">
+                              <p className="lead">
                                  Create a password
+                                 <br />
+                                 <span className="text-muted">
+                                    Must be at least 9 characters
+                                 </span>
                               </p>
 
                               <input
