@@ -4,7 +4,6 @@ import classnames from "classnames";
 import { v4 as getUuid } from "uuid";
 import { EMAIL_REGEX } from "../../utils/helpers";
 import { connect } from "react-redux";
-import actions from "../../store/actions";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 

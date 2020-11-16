@@ -27,30 +27,22 @@ router.get("/", (req, res) => {
 // @desc         Create a new user
 // @access       PUBLIC
 router.post("/", async (req, res) => {
-   const hashedPassword = await toHash(req.body.password),
    const user = {
       id: req.body.id,
       email: req.body.email,
-      password: hashedPassword ,
+      password: await toHash(req.body.password),
       created_at: req.body.createdAt,
    };
-   console.log(user);
-   db.query(insertUser, {
-      id: "f9963af7-37fe-490d-868f-42dcf94b5a87",
-      email: "john@test1.com",
-      password: "$2b$12$tAcLg2DzqeFWiXrlKe4NFO4.SlpbIftzWjcswIfC5VSEuLsOmX9sK",
-      created_at: 1605567137516,
-   }).then().catch();
+
+   db.query(insertUser, user)
+      .then((dbRes) => {
+         console.log(dbRes);
+         // return the user data so we can put in redux store
+      })
+      .catch((err) => {
+         console.log(err);
+         // return a 400 error to user
+      });
 });
 
 module.exports = router;
-
-/*
-starting on line 11: 
-- when this router is called from our server, meaning we land on this page: "/api/v1/users", we're going to call that file
-- when that file is called, it's going to use our database that we created (line 12),
-call the query method on our database, which is going to open up a connection, and inside that connection to the database, it's going to pass the function selectUser (which is a query - see selectUser.js file), which takes in an email and password
-- THEN, if we get something successful, we do all the other logic-- which is, get the individual user (line 14), console log the user, and then respond with the user
-
-Next, if there' a db error, we can catch that error, log the error, and give it the stats of 400. 
-*/
