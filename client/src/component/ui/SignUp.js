@@ -107,7 +107,7 @@ class SignUp extends React.Component {
 
          // post to API
          axios
-            .post("/api/v1/users", { test: "me" })
+            .post("/api/v1/users", user)
             .then((res) => {
                console.log(res);
             })

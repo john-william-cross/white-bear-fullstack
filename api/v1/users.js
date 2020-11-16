@@ -4,6 +4,7 @@ const router = express.Router();
 const db = require("../../db");
 const selectUser = require("../../queries/selectUser");
 const { toJson, toSafeParse } = require("../../utils/helpers");
+const bcrypt = require("bcrypt");
 // @route       GET api/v1/users
 //@desc         Get a valid user via email and password
 //@access       PUBLIC
@@ -25,8 +26,9 @@ router.get("/", (req, res) => {
 //@desc         Create a new user
 //@access       PUBLIC
 router.post("/", (req, res) => {
-   console.log("hit api");
-   console.log(req.body);
+   const user = req.body;
+   user.password = bcrypt.hash(user.password, 11);
+   console.log(user);
 });
 
 module.exports = router;
