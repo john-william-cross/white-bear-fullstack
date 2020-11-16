@@ -18,16 +18,7 @@ module.exports = {
    },
 
    toHash(password) {
-      console.log(password);
-      const saltRounds = 11;
-      bcrypt.hash(password, saltRounds, (err, hash) => {
-         if (err) {
-            console.log(err);
-         } else {
-            console.log(hash);
-
-            return hash;
-         }
-      });
+      const saltRounds = 12;
+      return bcrypt.hash(password, saltRounds);
    },
 };
