@@ -97,31 +97,16 @@ class SignUp extends React.Component {
          this.state.hasEmailError === false &&
          this.state.hasPasswordError === false
       ) {
+         // create user obj
          const user = {
             id: getUuid(),
             email: emailInput,
-            password: hash(passwordInput),
+            password: passwordInput,
             createdAt: Date.now(),
          };
-         console.log("Created user object for POST: ", user);
-         // Mimic API response:
-         axios
-            .get(
-               "https://raw.githubusercontent.com/john-william-cross/white-bear-mpa/910aac8722e9f00ab98100e2eb50d90943f533f3/src/mock-data/user.json"
-            )
-            .then((res) => {
-               // handle success
-               this.props.dispatch({
-                  type: actions.UPDATE_CURRENT_USER,
-                  payload: res.data,
-               });
-            })
-            .catch((error) => {
-               // handle error
-               console.log(error);
-            });
-         //redirect the user
-         this.props.history.push("/create-answer");
+         // post to API
+         // Update currentUser in global state with API response
+         // Go to next page:  this.props.history.push("/create-answer");
       }
    }
 
