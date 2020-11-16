@@ -3,11 +3,12 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../db");
 const selectUser = require("../../queries/selectUser");
+const insertUser = require("../../queries/insertUser");
 const { toJson, toSafeParse, toHash } = require("../../utils/helpers");
 
 // @route       GET api/v1/users
-//@desc         Get a valid user via email and password
-//@access       PUBLIC
+// @desc         Get a valid user via email and password
+// @access       PUBLIC
 
 router.get("/", (req, res) => {
    db.query(selectUser("mike@gmail.com", "replace_me"))
@@ -23,12 +24,23 @@ router.get("/", (req, res) => {
 });
 
 // @route       POST api/v1/users
-//@desc         Create a new user
-//@access       PUBLIC
+// @desc         Create a new user
+// @access       PUBLIC
 router.post("/", async (req, res) => {
-   const user = req.body;
-   user.password = await toHash(user.password);
+   const hashedPassword = await toHash(req.body.password),
+   const user = {
+      id: req.body.id,
+      email: req.body.email,
+      password: hashedPassword ,
+      created_at: req.body.createdAt,
+   };
    console.log(user);
+   db.query(insertUser, {
+      id: "f9963af7-37fe-490d-868f-42dcf94b5a87",
+      email: "john@test1.com",
+      password: "$2b$12$tAcLg2DzqeFWiXrlKe4NFO4.SlpbIftzWjcswIfC5VSEuLsOmX9sK",
+      created_at: 1605567137516,
+   }).then().catch();
 });
 
 module.exports = router;
