@@ -20,6 +20,10 @@ function checkIsInDb(email) {
       .query(selectUserByEmail, email)
       .then((users) => {
          console.log(users);
+         if (users.length === 0) return false;
+         else return true;
       })
-      .catch((err) => {});
+      .catch((err) => {
+         console.log(err);
+      });
 }
