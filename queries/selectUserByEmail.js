@@ -7,4 +7,5 @@ const selectUserByEmail = `
         email = ?
     LIMIT 1;
      `;
+
 module.exports = selectUserByEmail;
