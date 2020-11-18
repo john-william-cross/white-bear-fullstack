@@ -1,3 +1,3 @@
-module.exports = function getSignUpPasswordError(password) {
+module.exports = function getSignUpPasswordError(password, email) {
    return "";
 };
