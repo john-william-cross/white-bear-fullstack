@@ -2,7 +2,7 @@ const db = require("../db");
 const selectUserByEmail = require("../queries/selectUserByEmail");
 const bcrypt = require("bcrypt");
 
-module.exports = async function getSignUpPasswordError(password, email) {
+module.exports = async function getLoginPasswordError(password, email) {
    if (password === "") {
       return "Please enter your password.";
    }
