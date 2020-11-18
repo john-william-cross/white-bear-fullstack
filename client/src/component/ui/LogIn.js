@@ -34,14 +34,13 @@ class LogIn extends React.Component {
          .post("/api/v1/users/auth", user)
          .then((res) => {
             // handle success
-            const currentUser = res.data;
-            console.log(currentUser);
+            console.log(res.data);
+            // Update currentUser in global state w/ API response
             this.props.dispatch({
                type: actions.UPDATE_CURRENT_USER,
                payload: res.data,
             });
-            //redirect the user
-            // this.props.history.push("/create-answer");
+            this.props.history.push("/create-answer");
          })
          .catch((err) => {
             const { data } = err.response;
