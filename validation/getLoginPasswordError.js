@@ -29,6 +29,6 @@ function checkIsValidUser(email, password) {
          return isValidUser;
       })
       .catch((err) => {
-         console.log(err);
+         return false;
       });
 }

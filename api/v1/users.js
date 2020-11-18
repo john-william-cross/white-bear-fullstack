@@ -81,7 +81,11 @@ router.post("/auth", async (req, res) => {
                createdAt: user.created_at,
             });
          })
-         .catch((err) => {});
+         .catch((err) => {
+            console.log(err);
+            dbError = `${err.code} ${err.sqlMessage}`;
+            res.status(400).json({ dbError });
+         });
    } else {
       res.status(400).json({ emailError, passwordError });
    }
