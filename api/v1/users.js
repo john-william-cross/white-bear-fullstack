@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../db");
 const insertUser = require("../../queries/insertUser");
+const selectUserById = require("../../queries/selectUserById");
 const { toHash } = require("../../utils/helpers");
 const getSignUpEmailError = require("../../validation/getSignUpEmailError");
 const getSignUpPasswordError = require("../../validation/getSignUpPasswordError");
