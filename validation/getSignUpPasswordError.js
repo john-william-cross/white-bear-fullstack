@@ -5,7 +5,7 @@ module.exports = function getSignUpPasswordError(password, email) {
    if (password.length < 9) {
       return "Your password must be at least 9 characters.";
    }
-   if (this.checkHasLocalPart(password, email)) {
+   if (checkHasLocalPart(password, email)) {
       return "For your safety, your password cannot contain your email address.";
    }
    const uniqChars = [...new Set(password)];
