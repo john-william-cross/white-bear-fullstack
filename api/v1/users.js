@@ -12,42 +12,48 @@ const getSignUpPasswordError = require("../../validation/getSignUpPasswordError"
 // @desc         Create a new user
 // @access       PUBLIC
 router.post("/", async (req, res) => {
-   const { id, email, password, createdAt } = req.body;
-   const emailError = await getSignUpEmailError(email);
-   const passwordError = getSignUpPasswordError(password, email);
+   const { id, email, password, createdAt } = req.body; // grab these vars from req.body
+   const emailError = await getSignUpEmailError(email); // check for signUpEmailError (await because it's a db query), if error return string else return blank string
+   const passwordError = getSignUpPasswordError(password, email); // check for passwordError, if error return string else return blank string
+   let dbError = ""; // if no dbError return blank string
    if (emailError === "" && passwordError === "") {
+      // if no email or password error, now we can post it to db
       const user = {
+         // create the user
          id,
          email,
-         password: await toHash(password),
+         password: await toHash(password), // await hash function because it takes a moment to has password
          created_at: createdAt,
-      };
+      }; // now we have a user object ready to insert into the db
 
-      db.query(insertUser, user)
+      db.query(insertUser, user) // run the db.query insertUser and pass it the user
          .then(() => {
-            db.query(selectUserById, id)
+            // then if there's a success
+            db.query(selectUserById, id) // select use by the id we have from above
                .then((users) => {
-                  const user = users[0];
+                  // we get an array of users
+                  const user = users[0]; // get just the one user
                   res.status(200).json({
+                     // give it this json object with id, email, and createdAt, set to values below from db
                      id: user.id,
                      email: user.email,
                      createdAt: user.created_at,
                   });
                })
                .catch((err) => {
+                  // if error in selecting user by id, catch it and log the error
                   console.log(err);
-                  res.status(400).json(
-                     "something bad happened in the database"
-                  );
+                  dbError = `${err.code} ${err.sqlMessage}`;
+                  res.status(400).json({ dbError }); // respond with dbError: dbError
                });
          })
          .catch((err) => {
             console.log(err);
-            // return a 400 error to user
-            res.status(400).json({ emailError, passwordError });
+            dbError = `${err.code} ${err.sqlMessage}`; // if there's an error inserting the user, set dbError to err.code and err.sqlMessage
+            res.status(400).json({ dbError }); // respond with the dbError
          });
    } else {
-      res.status(400).json({ emailError, passwordError });
+      res.status(400).json({ emailError, passwordError }); // else return with status of 400, email and password errors return as strings with that (those) particular errors if they have one
    }
 });
 

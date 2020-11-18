@@ -56,7 +56,7 @@ class SignUp extends React.Component {
          .catch((err) => {
             const { data } = err.response;
             console.log(data);
-            const { emailError, passwordError } = data;
+            const { emailError, passwordError } = data; // use error responses to trigger our state
             if (emailError !== "") {
                this.setState({ hasEmailError: true, emailError });
             } else {
