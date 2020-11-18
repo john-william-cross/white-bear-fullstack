@@ -57,4 +57,8 @@ router.post("/", async (req, res) => {
    }
 });
 
+// @route        POST api/v1/users/auth
+// @desc         Authorize this user via email and password
+// @access       PUBLIC
+
 module.exports = router;
