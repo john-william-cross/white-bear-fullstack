@@ -7,6 +7,8 @@ const selectUserById = require("../../queries/selectUserById");
 const { toHash } = require("../../utils/helpers");
 const getSignUpEmailError = require("../../validation/getSignUpEmailError");
 const getSignUpPasswordError = require("../../validation/getSignUpPasswordError");
+const getLoginEmailError = require("../../validation/getLoginEmailError");
+const getLoginPasswordError = require("../../validation/getLoginPasswordError");
 
 // @route        POST api/v1/users
 // @desc         Create a new user
