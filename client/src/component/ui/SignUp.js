@@ -57,7 +57,6 @@ class SignUp extends React.Component {
       console.log(passwordInput);
 
       const uniqChars = [...new Set(passwordInput)];
-
       if (passwordInput === "") {
          this.setState({
             passwordError: "Please create a password.",
