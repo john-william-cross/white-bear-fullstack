@@ -107,7 +107,19 @@ class SignUp extends React.Component {
             // Go to next page:  this.props.history.push("/create-answer");
          })
          .catch((err) => {
-            console.log(err.response.data);
+            const { data } = err.response;
+            console.log(data);
+            const { emailError, passwordError } = data;
+            if (emailError !== "") {
+               this.setState({ hasEmailError: true, emailError });
+            } else {
+               this.setState({ hasEmailError: false, emailError });
+            }
+            if (passwordError !== "") {
+               this.setState({ hasPasswordError: true, passwordError });
+            } else {
+               this.setState({ hasPasswordError: false, passwordError });
+            }
          });
    }
 
