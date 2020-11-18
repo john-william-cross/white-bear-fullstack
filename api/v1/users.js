@@ -67,7 +67,13 @@ router.post("/auth", async (req, res) => {
    const { email, password } = req.body;
    const emailError = getLoginEmailError(email);
    const passwordError = await getLoginPasswordError(password, email);
+   console.log({ emailError, passwordError });
    let dbError = "";
+   if (emailError === "" && passwordError === "") {
+      // return the user to the client
+   } else {
+      res.status(400).json({ emailError, passwordError });
+   }
 });
 
 module.exports = router;
