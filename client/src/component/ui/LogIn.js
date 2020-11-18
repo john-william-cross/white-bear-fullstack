@@ -1,8 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import { v4 as getUuid } from "uuid";
 import { withRouter } from "react-router-dom";
-import { EMAIL_REGEX } from "../../utils/helpers";
 import axios from "axios";
 import actions from "../../store/actions";
 import { connect } from "react-redux";
@@ -21,75 +19,34 @@ class LogIn extends React.Component {
       };
    }
 
-   async setEmailState(emailInput) {
-      const lowerCasedEmailInput = emailInput.toLowerCase();
-      console.log(lowerCasedEmailInput);
-
-      if (emailInput === "")
-         this.setState({
-            emailError: "Please enter your email address.",
-            hasEmailError: true,
-         });
-      else if (EMAIL_REGEX.test(lowerCasedEmailInput) === false) {
-         console.log("not a valid email");
-         this.setState({
-            emailError: "Please enter a valid email address.",
-            hasEmailError: true,
-         });
-      } else {
-         this.setState({ emailError: "", hasEmailError: false });
-      }
-   }
-   async setPasswordState(passwordInput) {
-      console.log(passwordInput);
-
-      if (passwordInput === "") {
-         this.setState({
-            passwordError: "Please enter your password.",
-            hasPasswordError: true,
-         });
-      } else {
-         this.setState({ passwordError: "", hasPasswordError: false });
-      }
-   }
-
    async validateAndLogInUser() {
       const emailInput = document.getElementById("signup-email-input").value;
       const passwordInput = document.getElementById("signup-password-input")
          .value;
-      console.log({ emailInput, passwordInput });
-      await this.setEmailState(emailInput);
-      await this.setPasswordState(passwordInput, emailInput);
-      if (this.state.hasEmailError === false && passwordInput.length > 0) {
-         const user = {
-            //creating that user here
-            id: getUuid(),
-            email: emailInput,
-            createdAt: Date.now(),
-            password: passwordInput,
-         };
-         console.log("Created user object for POST: ", user);
-         // Mimic API response:
-         axios
-            .get(
-               "https://raw.githubusercontent.com/john-william-cross/white-bear-mpa/910aac8722e9f00ab98100e2eb50d90943f533f3/src/mock-data/user.json"
-            )
-            .then((res) => {
-               // handle success
-               const currentUser = res.data;
-               console.log(currentUser);
-               this.props.dispatch({
-                  type: actions.UPDATE_CURRENT_USER,
-                  payload: res.data,
-               });
-            })
-            .catch((error) => {
-               // handle error
-               console.log(error);
+
+      const user = {
+         //creating that user here
+         email: emailInput,
+         password: passwordInput,
+      };
+      console.log("Created user object for POST: ", user);
+      axios
+         .post("/api/v1/users/auth", user)
+         .then((res) => {
+            // handle success
+            const currentUser = res.data;
+            console.log(currentUser);
+            this.props.dispatch({
+               type: actions.UPDATE_CURRENT_USER,
+               payload: res.data,
             });
-         //redirect the user
-         this.props.history.push("/create-answer");
-      }
+         })
+         .catch((error) => {
+            // handle error
+            console.log(error);
+         });
+      //redirect the user
+      this.props.history.push("/create-answer");
    }
 
    render() {

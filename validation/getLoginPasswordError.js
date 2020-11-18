@@ -19,6 +19,7 @@ function checkIsValidUser(email, password) {
          console.log(users);
          const user = users[0];
          bcrypt.compare(password, user.password).then((result) => {
+            console.log(result);
             return result;
          });
       })
