@@ -1,6 +1,4 @@
 module.exports = function getSignUpPasswordError(password, email) {
-   const uniqChars = [...new Set(password)];
-
    if (password === "") {
       return "Please create a password.";
    }
@@ -10,6 +8,7 @@ module.exports = function getSignUpPasswordError(password, email) {
    if (this.checkHasLocalPart(password, email)) {
       return "For your safety, your password cannot contain your email address.";
    }
+   const uniqChars = [...new Set(password)];
    if (uniqChars.length < 3) {
       return "For your safety, your password must contain at least 3 unique characters.";
    }

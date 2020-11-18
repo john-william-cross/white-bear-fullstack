@@ -25,6 +25,16 @@ router.post("/", async (req, res) => {
       db.query(insertUser, user)
          .then((dbRes) => {
             console.log(dbRes);
+            db.query(selectUserById, id)
+               .then((users) => {
+                  const user = users[0];
+                  res.status(200).json({
+                     id: user.id,
+                     email: user.email,
+                     createdAt: user.created_at,
+                  });
+               })
+               .catch((err) => {});
             // return the user data so we can put in redux store
          })
          .catch((err) => {
