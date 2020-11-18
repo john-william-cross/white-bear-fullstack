@@ -8,7 +8,7 @@ const { toHash } = require("../../utils/helpers");
 const getSignUpEmailError = require("../../validation/getSignUpEmailError");
 const getSignUpPasswordError = require("../../validation/getSignUpPasswordError");
 
-// @route       POST api/v1/users
+// @route        POST api/v1/users
 // @desc         Create a new user
 // @access       PUBLIC
 router.post("/", async (req, res) => {
@@ -58,7 +58,14 @@ router.post("/", async (req, res) => {
 });
 
 // @route        POST api/v1/users/auth
-// @desc         Authorize this user via email and password
+// @desc         Check this user against the db via email and password
 // @access       PUBLIC
+
+router.post("/auth", async (req, res) => {
+   const { email, password } = req.body;
+   const emailError = getLoginEmailError(email);
+   const passwordError = getSLoginPasswordError(password, email);
+   let dbError = "";
+});
 
 module.exports = router;
