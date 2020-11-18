@@ -23,7 +23,8 @@ router.post("/", async (req, res) => {
       };
 
       db.query(insertUser, user)
-         .then(() => {
+         .then((dbRes) => {
+            console.log(dbRes);
             db.query(selectUserById, id)
                .then((users) => {
                   const user = users[0];
@@ -33,17 +34,13 @@ router.post("/", async (req, res) => {
                      createdAt: user.created_at,
                   });
                })
-               .catch((err) => {
-                  console.log(err);
-                  res.status(400).json(
-                     "something bad happened in the database"
-                  );
-               });
+               .catch((err) => {});
+            // return the user data so we can put in redux store
          })
          .catch((err) => {
             console.log(err);
             // return a 400 error to user
-            res.status(400).json({ emailError, passwordError });
+            res.status(400).json(emailError, passwordError);
          });
    } else {
       res.status(400).json({ emailError, passwordError });
