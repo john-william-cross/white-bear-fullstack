@@ -76,6 +76,7 @@ router.post("/auth", async (req, res) => {
       // return the user to the client
       db.query(selectUserByEmail, email)
          .then((users) => {
+            // TODO: repeat when creating a user
             const user = {
                id: users[0].id,
                email: users[0].email,

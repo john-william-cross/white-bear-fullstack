@@ -32,7 +32,7 @@ class LogIn extends React.Component {
       axios
          .post("/api/v1/users/auth", user)
          .then((res) => {
-            // Update currentUser in global state w/ API response
+            // set token in localstorage
             const user = jwtDecode(res.data);
             this.props.dispatch({
                type: actions.UPDATE_CURRENT_USER,
