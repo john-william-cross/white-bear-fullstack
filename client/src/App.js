@@ -10,7 +10,20 @@ import ReviewEmpty from "./component/pages/ReviewEmpty";
 import AllCards from "./component/pages/AllCards";
 import Edit from "./component/pages/Edit";
 import NotFound from "./component/pages/NotFound";
+import jwtDecode from "jwt-decode";
 
+const authToken = localStorage.authToken;
+if (authToken) {
+   // if the authToken is not expired
+   const currentTimeInSec = Date.now() / 1000;
+   if (currentTimeInSec > exp) {
+   }
+   // store the user in global state / redux store (currentUser)
+   // set authorization headers
+   // redirect to create-answers
+} else {
+   console.log("no authToken");
+}
 function App() {
    return (
       <Router>
