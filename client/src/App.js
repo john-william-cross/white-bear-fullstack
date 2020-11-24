@@ -10,7 +10,6 @@ import ReviewEmpty from "./component/pages/ReviewEmpty";
 import AllCards from "./component/pages/AllCards";
 import Edit from "./component/pages/Edit";
 import NotFound from "./component/pages/NotFound";
-import jwtDecode from "jwt-decode";
 
 const authToken = localStorage.authToken;
 if (authToken) {
