@@ -11,7 +11,8 @@ const validateJwt = require("../../utils/validateJwt");
 router.get("/", validateJwt, (req, res) => {
    // get request, post  requests.... this is where all the business logic happens in an application.
    console.log(req.query);
-   const { userId, searchTerm, order } = req.query;
+   const { searchTerm, order } = req.query;
+   const userId = req.user.id;
    let constructedSearchTerm;
    if (searchTerm === "" || searchTerm === undefined) {
       constructedSearchTerm = "%%";
