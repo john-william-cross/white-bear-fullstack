@@ -1,4 +1,5 @@
 // This file represents the users resource
+require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const db = require("../../db");
@@ -80,9 +81,11 @@ router.post("/auth", async (req, res) => {
                email: users[0].email,
                createdAt: users[0].created_at,
             };
-            const accessToken = jwt.sign(user, secret, { expiresIn: "1m" });
+            const accessToken = jwt.sign(user, process.env.JWT_ACCESS_SECRET, {
+               expiresIn: "1m",
+            });
 
-            res.status(200).json(user);
+            res.status(200).json(accessToken);
          })
          .catch((err) => {
             console.log(err);
