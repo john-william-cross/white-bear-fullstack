@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import actions from "../../store/actions";
 import { connect } from "react-redux";
-
+import jwtDecode from "jwt-decode";
 class LogIn extends React.Component {
    //we can set the state in constructor
    constructor(props) {
@@ -33,9 +33,10 @@ class LogIn extends React.Component {
          .post("/api/v1/users/auth", user)
          .then((res) => {
             // Update currentUser in global state w/ API response
+            const user = jwtDecode(res.data);
             this.props.dispatch({
                type: actions.UPDATE_CURRENT_USER,
-               payload: res.data,
+               payload: user,
             });
             this.props.history.push("/create-answer");
          })
