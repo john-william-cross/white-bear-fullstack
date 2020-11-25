@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { checkIsOver, MAX_CARD_CHARS } from "../../utils/helpers";
 import { connect } from "react-redux";
-// import actions from "../../store/actions";
+import actions from "../../store/actions";
+import { v4 as getUuid } from "uuid";
 
 class CreateAnswer extends React.Component {
    constructor(props) {
@@ -26,6 +27,25 @@ class CreateAnswer extends React.Component {
    setAnswerText(e) {
       this.setState({ answerText: e.target.value });
       // console.log(e.target, e.target.value);
+   }
+
+   setCreatableCard() {
+      console.log("UPDATING CREATABLE CARD");
+      this.props.dispatch({
+         type: actions.UPDATE_CREATABLE_CARD,
+         payload: {
+            // the card itself
+            id: getUuid(),
+            answer: "",
+            imagery: "",
+            userId: "",
+            createdAt: Date.now(),
+            nextAttemptAt: 0, //
+            lastAttemptAt: Date.now(),
+            totalSuccessfulAttempts: 0,
+            level: 1,
+         },
+      });
    }
 
    render() {
@@ -67,6 +87,9 @@ class CreateAnswer extends React.Component {
                   "btn btn-lg btn-outline-primary float-right",
                   { disabled: this.checkHasInvalidCharCount() }
                )}
+               onClick={() => {
+                  this.setCreatableCard();
+               }}
             >
                Next
             </button>
