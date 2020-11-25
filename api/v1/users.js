@@ -83,7 +83,8 @@ router.post("/auth", async (req, res) => {
                createdAt: users[0].created_at,
             };
             const accessToken = jwt.sign(user, process.env.JWT_ACCESS_SECRET, {
-               expiresIn: "100m",
+               // expiresIn: "100m",
+               // TODO: delete expiresIn above and add refresh token
             });
 
             res.status(200).json(accessToken);
