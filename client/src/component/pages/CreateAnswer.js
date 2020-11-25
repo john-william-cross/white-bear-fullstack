@@ -3,8 +3,10 @@ import AppTemplate from "../ui/AppTemplate";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { checkIsOver, MAX_CARD_CHARS } from "../../utils/helpers";
+import { connect } from "react-redux";
+import actions from "../../store/actions";
 
-export default class CreateAnswer extends React.Component {
+class CreateAnswer extends React.Component {
    constructor(props) {
       super(props);
       // console.log(`in the edit component`);
@@ -74,3 +76,10 @@ export default class CreateAnswer extends React.Component {
       );
    }
 }
+
+function mapStateToProps(state) {
+   //Everything down here is global state
+   return {};
+}
+
+export default connect(mapStateToProps)(CreateAnswer);
