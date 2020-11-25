@@ -2,7 +2,7 @@ import React from "react";
 import AppTemplate from "../ui/AppTemplate";
 import MemoryCard from "../ui/MemoryCard";
 import axios from "axios";
-const userId = "f79eddaf-f93d-4e49-8977-24a0681932b0";
+// const userId = "f79eddaf-f93d-4e49-8977-24a0681932b0";
 
 export default class AllCards extends React.Component {
    constructor(props) {
@@ -30,11 +30,9 @@ export default class AllCards extends React.Component {
 
    setSearchTerm() {
       const searchInput = document.getElementById("search-input").value;
-      this.setState =
-         ({ searchTerm: searchInput },
-         () => {
-            this.setMemoryCards();
-         });
+      this.setState({ searchTerm: searchInput }, () => {
+         this.setMemoryCards();
+      });
    }
 
    //comment for commit
@@ -42,7 +40,7 @@ export default class AllCards extends React.Component {
    setMemoryCards() {
       axios
          .get(
-            `/api/v1/memory-cards?userId=${userId}&searchTerm=${this.state.searchTerm}&order=${this.state.order}`
+            `/api/v1/memory-cards?searchTerm=${this.state.searchTerm}&order=${this.state.order}`
          )
          .then((res) => {
             // handle success
