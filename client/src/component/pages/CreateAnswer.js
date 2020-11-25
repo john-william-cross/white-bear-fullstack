@@ -1,6 +1,6 @@
 import React from "react";
 import AppTemplate from "../ui/AppTemplate";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { checkIsOver, MAX_CARD_CHARS, defaultLevel } from "../../utils/helpers";
 import { connect } from "react-redux";
@@ -32,6 +32,7 @@ class CreateAnswer extends React.Component {
 
    setCreatableCard() {
       console.log("UPDATING CREATABLE CARD");
+      const currentTime = Date.now();
       this.props.dispatch({
          type: actions.UPDATE_CREATABLE_CARD,
          payload: {
@@ -39,10 +40,10 @@ class CreateAnswer extends React.Component {
             id: getUuid(),
             answer: "",
             imagery: "",
-            userId: "",
-            createdAt: Date.now(),
-            nextAttemptAt: getNextAttemptAt(defaultLevel), //
-            lastAttemptAt: Date.now(),
+            userId: this.props.currentUser.id,
+            createdAt: currentTime,
+            nextAttemptAt: getNextAttemptAt(defaultLevel, currentTime), //
+            lastAttemptAt: currentTime,
             totalSuccessfulAttempts: 0,
             level: 1,
          },
@@ -101,7 +102,7 @@ class CreateAnswer extends React.Component {
 
 function mapStateToProps(state) {
    //Everything down here is global state
-   return {};
+   return { currentUser: state.currentUser }; // we need to get the userId, so we can grab it from the redux store like so
 }
 
 export default connect(mapStateToProps)(CreateAnswer);

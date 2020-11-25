@@ -1,16 +1,23 @@
-export default (level) => {
+import addDate from "date-fns/add";
+import formatDate from "date-fns/format";
+
+export default (level, lastAttemptAt) => {
    const levelDuration = {
-      1: "10m",
-      2: "3h",
-      3: "1d",
-      4: "3d",
-      5: "1w",
-      6: "2w",
-      7: "5w",
-      8: "20w",
-      9: "1y",
-      10: "2y",
-      11: "4y",
-      12: "8y",
+      1: { minutes: 10 },
+      2: { hours: 3 },
+      3: { days: 1 },
+      4: { days: 3 },
+      5: { weeks: 1 },
+      6: { weeks: 2 },
+      7: { weeks: 5 },
+      8: { weeks: 20 },
+      9: { years: 1 },
+      10: { years: 2 },
+      11: { years: 4 },
+      12: { years: 8 },
    };
+   // return as milliseconds past the epoch
+   const nextAttemptAt = addDate(lastAttemptAt, levelDuration[level]);
+   const timestamp = Number(formatDate(nextAttemptAt, "T"));
+   return timestamp;
 };
