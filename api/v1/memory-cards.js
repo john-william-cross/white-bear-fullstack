@@ -33,7 +33,7 @@ router.get("/", validateJwt, (req, res) => {
                imagery: memoryCard.imagery,
                answer: memoryCard.answer,
                userId: memoryCard.user_id,
-               createdAt: memoryCard.create_at,
+               createdAt: memoryCard.created_at,
                nextAttemptAt: memoryCard.next_attempt_at,
                lastAttemptAt: memoryCard.last_attempt_at,
                totalSuccessfulAttempts: memoryCard.total_successful_attempts,
