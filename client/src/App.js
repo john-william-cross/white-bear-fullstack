@@ -37,15 +37,13 @@ if (authToken) {
       });
       // set authorization headers for every request
       axios.defaults.headers.common["x-auth-token"] = authToken;
-
-      // redirect to create-answers
       const currentUrl = window.location.pathname;
       if (currentUrl === "/") {
          window.location.href = "/create-answer";
       }
    }
 } else {
-   console.log("no authToken");
+   console.log("no token");
    delete axios.defaults.headers.common["x-auth-token"];
 }
 function App() {
