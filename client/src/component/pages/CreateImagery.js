@@ -47,7 +47,36 @@ class CreateImagery extends React.Component {
       console.log(e.target, e.target.value);
    }
 
-   updateCreatableCard() {}
+   updateCreatableCard() {
+      console.log("UPDATING CREATABLE CARD");
+      const {
+         id,
+         answer,
+         userId,
+         createdAt,
+         nextAttemptAt,
+         lastAttemptAt,
+         totalSuccessfulAttempts,
+         level,
+      } = this.props.creatableCard;
+      this.props.dispatch({
+         type: actions.UPDATE_CREATABLE_CARD,
+         payload: {
+            // the card itself
+            id,
+            answer,
+            imagery: this.state.imageryText,
+            userId,
+            createdAt,
+            nextAttemptAt,
+            lastAttemptAt,
+            totalSuccessfulAttempts,
+            level,
+         },
+      });
+      // save to the database (make an API call)
+      // go to create-answer
+   }
 
    render() {
       return (
@@ -68,10 +97,7 @@ class CreateImagery extends React.Component {
             </div>
             <div className="card">
                <div className="card-body bg-secondary lead">
-                  One morning, when Gregor Samsa woke from troubled dreams, he
-                  found himself transformed in his bed into a horrible vermin.
-                  He lay on his armour-like back, and if he lifted his head a
-                  little he could se
+                  {this.props.creatableCard.answer}
                </div>
             </div>
             <p className="text-muted float-right mt-2 mb-5">
@@ -122,7 +148,7 @@ class CreateImagery extends React.Component {
 
 function mapStateToProps(state) {
    //Everything down here is global state
-   return {}; // we need to get the userId, so we can grab it from the redux store like so
+   return { creatableCard: state.creatableCard }; // we need to get the state of creatableCard, so we can grab it from the redux store like so
 }
 
 export default connect(mapStateToProps)(CreateImagery);
