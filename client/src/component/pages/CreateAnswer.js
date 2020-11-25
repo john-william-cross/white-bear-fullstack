@@ -2,10 +2,11 @@ import React from "react";
 import AppTemplate from "../ui/AppTemplate";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
-import { checkIsOver, MAX_CARD_CHARS } from "../../utils/helpers";
+import { checkIsOver, MAX_CARD_CHARS, defaultLevel } from "../../utils/helpers";
 import { connect } from "react-redux";
 import actions from "../../store/actions";
 import { v4 as getUuid } from "uuid";
+import getNextAttemptAt from "../../utils/getNextAttemptAt";
 
 class CreateAnswer extends React.Component {
    constructor(props) {
@@ -40,7 +41,7 @@ class CreateAnswer extends React.Component {
             imagery: "",
             userId: "",
             createdAt: Date.now(),
-            nextAttemptAt: 0, //
+            nextAttemptAt: getNextAttemptAt(defaultLevel), //
             lastAttemptAt: Date.now(),
             totalSuccessfulAttempts: 0,
             level: 1,
