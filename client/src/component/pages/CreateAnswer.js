@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { checkIsOver, MAX_CARD_CHARS } from "../../utils/helpers";
 import { connect } from "react-redux";
-import actions from "../../store/actions";
+// import actions from "../../store/actions";
 
 class CreateAnswer extends React.Component {
    constructor(props) {
@@ -62,16 +62,14 @@ class CreateAnswer extends React.Component {
             </p>
             <div className="clearfix"></div>
 
-            <Link
-               to="/create-imagery"
-               id="click-next"
+            <button
                className={classnames(
                   "btn btn-lg btn-outline-primary float-right",
                   { disabled: this.checkHasInvalidCharCount() }
                )}
             >
                Next
-            </Link>
+            </button>
          </AppTemplate>
       );
    }
