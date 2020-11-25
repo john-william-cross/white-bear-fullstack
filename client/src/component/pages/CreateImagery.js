@@ -6,10 +6,12 @@ import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { checkIsOver, MAX_CARD_CHARS } from "../../utils/helpers";
 import axios from "axios";
+import { connect } from "react-redux";
+import actions from "../../store/actions";
 
 const memoryCard = memoryCards[3];
 
-export default class CreateImagery extends React.Component {
+class CreateImagery extends React.Component {
    constructor(props) {
       super(props);
       axios
@@ -38,11 +40,14 @@ export default class CreateImagery extends React.Component {
          return true;
       } else return false;
    }
+
    setImageryText(e) {
       this.setState({ imageryText: e.target.value });
 
       console.log(e.target, e.target.value);
    }
+
+   updateCreatableCard() {}
 
    render() {
       return (
@@ -94,6 +99,9 @@ export default class CreateImagery extends React.Component {
                className={classnames("btn btn-primary btn-lg float-right", {
                   disabled: this.checkHasInvalidCharCount(),
                })}
+               onClick={() => {
+                  this.updateCreatableCard();
+               }}
             >
                <img
                   src={saveIcon}
@@ -111,3 +119,10 @@ export default class CreateImagery extends React.Component {
       );
    }
 }
+
+function mapStateToProps(state) {
+   //Everything down here is global state
+   return {}; // we need to get the userId, so we can grab it from the redux store like so
+}
+
+export default connect(mapStateToProps)(CreateImagery);
