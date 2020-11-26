@@ -122,6 +122,6 @@ button {
 }
 
 .disabled {
-   pointer-events: auto !important;
-   cursor: not-allowed;
+   pointer-events: fill !important;
+   cursor: not-allowed !important;
 }
