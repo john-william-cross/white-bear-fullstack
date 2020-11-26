@@ -51,5 +51,37 @@ router.get("/", validateJwt, (req, res) => {
 // @route       POST api/v1/memory_cards
 // @desc        POST a memory card to the memory cards resource
 // @access      Private
-router.post("/", validateJwt, (req, res) => {});
+router.post("/", validateJwt, (req, res) => {
+   const user = req.user;
+   console.log(user);
+   const {
+      id,
+      imagery,
+      answer,
+      createdAt,
+      nextAttemptAt,
+      lastAttemptAt,
+      totalSuccessfulAttempts,
+   } = req.body;
+   const memoryCard = {
+      id,
+      imagery,
+      answer,
+      user_id: user.id,
+      created_at: createdAt,
+      next_attempt_at: nextAttemptAt,
+      last_attempt_at: lastAttemptAt,
+      total_successful_attempts: totalSuccessfulAttempts,
+   };
+   console.log(memoryCard);
+   db.query(insertMemoryCard, memoryCard)
+      .then(() => {
+         // success
+         console.log("createdx memory card in the dbv");
+      })
+      .catch((err) => {
+         // error
+         console.log(err);
+      });
+});
 module.exports = router;

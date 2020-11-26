@@ -35,7 +35,7 @@ class CreateImagery extends React.Component {
       console.log(e.target, e.target.value);
    }
 
-   updateCreatableCard() {
+   async updateCreatableCard() {
       console.log("UPDATING CREATABLE CARD");
       const {
          id,
@@ -47,7 +47,7 @@ class CreateImagery extends React.Component {
          totalSuccessfulAttempts,
          level,
       } = this.props.creatableCard;
-      this.props.dispatch({
+      await this.props.dispatch({
          type: actions.UPDATE_CREATABLE_CARD,
          payload: {
             // the card itself
@@ -77,7 +77,6 @@ class CreateImagery extends React.Component {
             // hide error overlay after 5 seconds
             // stay on this page
          });
-      // go to create-answer
    }
 
    render() {
