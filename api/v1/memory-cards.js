@@ -48,4 +48,8 @@ router.get("/", validateJwt, (req, res) => {
       });
 });
 
+// @route       POST api/v1/memory_cards
+// @desc        POST a memory card to the memory cards resource
+// @access      Private
+router.post("/", validateJwt, (req, res) => {});
 module.exports = router;
