@@ -36,14 +36,17 @@ router.post("/", async (req, res) => {
             // then if there's a success
             db.query(selectUserById, id) // select use by the id we have from above
                .then((users) => {
-                  // we get an array of users
-                  const user = users[0]; // get just the one user
-                  res.status(200).json({
-                     // give it this json object with id, email, and createdAt, set to values below from db
-                     id: user.id,
-                     email: user.email,
-                     createdAt: user.created_at,
-                  });
+                  const user = {
+                     id: users[0].id,
+                     email: users[0].email,
+                     createdAt: users[0].created_at,
+                  };
+                  const accessToken = jwt.sign(
+                     user,
+                     process.env.JWT_ACCESS_SECRET
+                  );
+                  // TODO: add refresh token
+                  res.status(200).json(accessToken);
                })
                .catch((err) => {
                   // if error in selecting user by id, catch it and log the error
@@ -76,7 +79,6 @@ router.post("/auth", async (req, res) => {
       // return the user to the client
       db.query(selectUserByEmail, email)
          .then((users) => {
-            // TODO: repeat when creating a user
             const user = {
                id: users[0].id,
                email: users[0].email,
