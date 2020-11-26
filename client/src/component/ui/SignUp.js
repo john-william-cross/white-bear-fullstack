@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import actions from "../../store/actions";
+import jwtDecode from "jwt-decode";
 
 //functions go in react classes
 class SignUp extends React.Component {
@@ -44,14 +45,15 @@ class SignUp extends React.Component {
       axios
          .post("/api/v1/users", user)
          .then((res) => {
-            console.log(res.data);
-            // Update currentUser in global state w/ API response
+            // set token in localStorage
+            const authToken = res.data;
+            localStorage.setItem("authToken", authToken);
+            const user = jwtDecode(authToken);
             this.props.dispatch({
                type: actions.UPDATE_CURRENT_USER,
-               payload: res.data,
+               payload: user,
             });
-            // TODO: add this in once we pass the authToken in our response
-            // axios.defaults.headers.common["x-auth-token"] = authToken;
+            axios.defaults.headers.common["x-auth-token"] = authToken;
             this.props.history.push("/create-answer");
          })
          .catch((err) => {
