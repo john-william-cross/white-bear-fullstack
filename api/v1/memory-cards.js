@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../db");
 const selectAllCards = require("../../queries/selectAllCards");
+const insertMemoryCard = require("../../queries/insertMemoryCards");
 const validateJwt = require("../../utils/validateJwt");
 
 // @route       GET api/v1/memory_cards
@@ -62,6 +63,7 @@ router.post("/", validateJwt, (req, res) => {
       nextAttemptAt,
       lastAttemptAt,
       totalSuccessfulAttempts,
+      level,
    } = req.body;
    const memoryCard = {
       id,
@@ -72,16 +74,19 @@ router.post("/", validateJwt, (req, res) => {
       next_attempt_at: nextAttemptAt,
       last_attempt_at: lastAttemptAt,
       total_successful_attempts: totalSuccessfulAttempts,
+      level,
    };
    console.log(memoryCard);
    db.query(insertMemoryCard, memoryCard)
-      .then(() => {
+      .then((dbRes) => {
          // success
-         console.log("createdx memory card in the dbv");
+         console.log("created memory card in the db", dbRes);
+         // return with a status response
       })
       .catch((err) => {
          // error
          console.log(err);
+         // return with an error status response
       });
 });
 module.exports = router;
