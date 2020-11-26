@@ -12,7 +12,7 @@ class CreateAnswer extends React.Component {
       super(props);
       // console.log(`in the edit component`);
       this.state = {
-         answerText: "",
+         answerText: this.props.creatableCard.answer || "",
       };
    }
 
@@ -61,10 +61,9 @@ class CreateAnswer extends React.Component {
                >
                   <textarea
                      rows="6"
-                     id="create-answer-input"
                      autoFocus={true}
-                     defaultValue={""}
                      onChange={(e) => this.setAnswerText(e)}
+                     defaultValue={this.state.answerText}
                   ></textarea>
                </div>
             </div>
@@ -102,7 +101,10 @@ class CreateAnswer extends React.Component {
 
 function mapStateToProps(state) {
    //Everything down here is global state
-   return { currentUser: state.currentUser }; // we need to get the userId, so we can grab it from the redux store like so
+   return {
+      currentUser: state.currentUser,
+      creatableCard: state.creatableCard,
+   }; // we need to get the userId, so we can grab it from the redux store like so
 }
 
 export default connect(mapStateToProps)(CreateAnswer);
