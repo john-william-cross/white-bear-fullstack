@@ -1,19 +1,6 @@
-/*
-
-I've included a class called .background-image that is how you can perfectly fill a webpage with a background image.
-(It's a pain in the butt to google this. I included the best link I found in the solution.)
-
-Then on your HTML file, create a div that wraps your entire content on the landing page and give it this class.
-
-Example:
-
-<div class="background-image">
-   <div class="container">
-      <!-- More html here -->
-   </div>
-</div>
-
-*/
+html {
+   overflow-y: scroll;
+}
 
 .landing-page-logo {
    @include media-breakpoint-only(xs) {
