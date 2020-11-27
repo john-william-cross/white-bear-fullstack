@@ -48,10 +48,8 @@ class ReviewAnswer extends React.Component {
       }
    }
 
-   storeEditableCard() {
+   storeEditableCard(memoryCard) {
       console.log("STORING EDITABLE CARD");
-      const memoryCard = this.props.queue.cards[this.props.queue.index];
-      console.log("HERE's THE MEMORY CARD WE STORED", memoryCard);
       this.props.dispatch({
          type: actions.STORE_EDITABLE_CARD,
          payload: { card: memoryCard, prevRoute: "/review-answer" },
@@ -60,6 +58,7 @@ class ReviewAnswer extends React.Component {
 
    render() {
       const memoryCard = { ...this.props.queue.cards[this.props.queue.index] };
+      console.log("memory card: ", memoryCard);
       return (
          <AppTemplate>
             <div className="mb-5"></div>
@@ -96,7 +95,7 @@ class ReviewAnswer extends React.Component {
                <button
                   className="btn btn-primary ml-4"
                   onClick={() => {
-                     this.updateCardWithGotIt();
+                     this.updateCardWithGotIt(memoryCard);
                   }}
                >
                   <img
