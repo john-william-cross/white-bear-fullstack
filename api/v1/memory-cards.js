@@ -92,34 +92,32 @@ router.post("/", validateJwt, (req, res) => {
 });
 
 // @route       PUT api/v1/memory_cards/:id
-// @desc        POST a memory card to the memory cards resource
+// @desc        Update a memory card in the memory cards resource
 // @access      Private
 router.put("/:id", validateJwt, (req, res) => {
    const id = req.params.id;
-   console.log("memory card id: ", id);
-   // const user = req.user;
-   // console.log(user);
-   // const {
-   //    id,
-   //    imagery,
-   //    answer,
-   //    createdAt,
-   //    nextAttemptAt,
-   //    lastAttemptAt,
-   //    totalSuccessfulAttempts,
-   //    level,
-   // } = req.body;
-   // const memoryCard = {
-   //    id,
-   //    imagery,
-   //    answer,
-   //    user_id: user.id,
-   //    created_at: createdAt,
-   //    next_attempt_at: nextAttemptAt,
-   //    last_attempt_at: lastAttemptAt,
-   //    total_successful_attempts: totalSuccessfulAttempts,
-   //    level,
-   // };
+   const user = req.user;
+   const {
+      imagery,
+      answer,
+      createdAt,
+      nextAttemptAt,
+      lastAttemptAt,
+      totalSuccessfulAttempts,
+      level,
+   } = req.body;
+   const memoryCard = {
+      id,
+      imagery,
+      answer,
+      user_id: user.id,
+      created_at: createdAt,
+      next_attempt_at: nextAttemptAt,
+      last_attempt_at: lastAttemptAt,
+      total_successful_attempts: totalSuccessfulAttempts,
+      level,
+   };
+   console.log(memoryCard);
    // console.log(memoryCard);
    // db.query(insertMemoryCard, memoryCard)
    //    .then((dbRes) => {
