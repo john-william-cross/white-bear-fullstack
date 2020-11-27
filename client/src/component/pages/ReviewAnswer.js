@@ -2,7 +2,7 @@ import React from "react";
 import thumbsUpIcon from "../../icons/thumbs-up.svg";
 import AppTemplate from "../ui/AppTemplate";
 import { Link } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import { connect } from "react-redux";
 import actions from "../../store/actions";
 
@@ -27,10 +27,18 @@ class ReviewAnswer extends React.Component {
       const queue = { ...this.props.queue };
       queue.cards[this.props.queue.index] = memoryCard;
       // db PUT this card in our axios request
-
-      // TODO: on success, fire success overlay
-      // TODO: on error, fire error overlay
-      this.goToNextCard();
+      axios
+         .put(`/api/v1/memory-cards/${memoryCard.id}`, memoryCard)
+         .then(() => {
+            console.log("Memory card updated");
+            // TODO: on success, fire success overlay
+            this.goToNextCard();
+         })
+         .catch((err) => {
+            const { data } = err.response;
+            console.log(data);
+            // TODO: Display error overlay, hide error overlay after 5 seconds
+         });
    }
 
    goToNextCard() {
