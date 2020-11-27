@@ -21,14 +21,14 @@ class ReviewAnswer extends React.Component {
    updateCardWithGotIt(memoryCard) {
       // Biz logic:
       // increase successfulAttempts by 1
-      memoryCard.totalSuccessfulAttempts += 1;
+      const newMemoryCard = { ...memoryCard };
+      newMemoryCard.totalSuccessfulAttempts += 1;
       // update lastAttemptAt with today's date
-      memoryCard.lastAttemptAt = Date.now();
-      const queue = { ...this.props.queue };
-      queue.cards[this.props.queue.index] = memoryCard;
+      newMemoryCard.lastAttemptAt = Date.now();
+
       // db PUT this card in our axios request
       axios
-         .put(`/api/v1/memory-cards/${memoryCard.id}`, memoryCard)
+         .put(`/api/v1/memory-cards/${newMemoryCard.id}`, newMemoryCard)
          .then(() => {
             console.log("Memory card updated");
             // TODO: on success, fire success overlay
@@ -61,7 +61,7 @@ class ReviewAnswer extends React.Component {
    }
 
    render() {
-      const memoryCard = { ...this.props.queue.cards[this.props.queue.index] };
+      const memoryCard = this.props.queue.cards[this.props.queue.index];
       console.log("memory card: ", memoryCard);
       return (
          <AppTemplate>
