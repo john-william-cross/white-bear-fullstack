@@ -20,16 +20,11 @@ class ReviewAnswer extends React.Component {
 
    updateCardWithGotIt(memoryCard) {
       // Biz logic:
-      /*
-
-      increase successfulAttempts by 1      
-      update lastAttemptedOn with today's date
-
-      */
-
-      // update some properties
+      // increase successfulAttempts by 1
       memoryCard.totalSuccessfulAttempts += 1;
-      console.log(memoryCard);
+      // update lastAttemptAt with today's date
+      memoryCard.lastAttemptAt = Date.now();
+
       // update the global state
       // db PUT this card in our axios request
       // TODO: on success, fire success overlay
