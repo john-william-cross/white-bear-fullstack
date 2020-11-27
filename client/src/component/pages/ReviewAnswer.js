@@ -19,7 +19,12 @@ class ReviewAnswer extends React.Component {
    }
 
    updateCardWithGotIt() {
-      // db PUT
+      // get the card we are on
+      // update some properties
+      // update the global state
+      // db PUT this card in our axios request
+      // TODO: on success, fire success overlay
+      // TODO: on error, fire error overlay
       this.goToNextCard();
    }
 
@@ -46,7 +51,6 @@ class ReviewAnswer extends React.Component {
 
    render() {
       const memoryCard = this.props.queue.cards[this.props.queue.index];
-
       return (
          <AppTemplate>
             <div className="mb-5"></div>
