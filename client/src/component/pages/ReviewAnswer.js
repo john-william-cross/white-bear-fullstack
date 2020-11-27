@@ -14,13 +14,22 @@ class ReviewAnswer extends React.Component {
       }
    }
 
-   updateCardWithNeedsWork() {
+   updateCardWithNeedsWork(memoryCard) {
       this.goToNextCard();
    }
 
-   updateCardWithGotIt() {
-      // get the card we are on
+   updateCardWithGotIt(memoryCard) {
+      // Biz logic:
+      /*
+
+      increase successfulAttempts by 1      
+      update lastAttemptedOn with today's date
+
+      */
+
       // update some properties
+      memoryCard.totalSuccessfulAttempts += 1;
+      console.log(memoryCard);
       // update the global state
       // db PUT this card in our axios request
       // TODO: on success, fire success overlay
@@ -50,7 +59,7 @@ class ReviewAnswer extends React.Component {
    }
 
    render() {
-      const memoryCard = this.props.queue.cards[this.props.queue.index];
+      const memoryCard = { ...this.props.queue.cards[this.props.queue.index] };
       return (
          <AppTemplate>
             <div className="mb-5"></div>
@@ -70,7 +79,7 @@ class ReviewAnswer extends React.Component {
                to="/edit"
                className="btn btn-link"
                onClick={() => {
-                  this.storeEditableCard();
+                  this.storeEditableCard(memoryCard);
                }}
             >
                Edit
@@ -79,7 +88,7 @@ class ReviewAnswer extends React.Component {
                <button
                   className="btn btn-outline-primary"
                   onClick={() => {
-                     this.updateCardWithNeedsWork();
+                     this.updateCardWithNeedsWork(memoryCard);
                   }}
                >
                   Needs work
