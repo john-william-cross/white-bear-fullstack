@@ -38,30 +38,12 @@ class CreateImagery extends React.Component {
    async updateCreatableCard() {
       if (!this.checkHasInvalidCharCount()) {
          console.log("UPDATING CREATABLE CARD");
-         const {
-            id,
-            answer,
-            userId,
-            createdAt,
-            nextAttemptAt,
-            lastAttemptAt,
-            totalSuccessfulAttempts,
-            level,
-         } = this.props.creatableCard;
+         const creatableCard = { ...this.props.creatableCard };
+         creatableCard.imagery = this.state.imageryText;
+
          await this.props.dispatch({
             type: actions.UPDATE_CREATABLE_CARD,
-            payload: {
-               // the card itself
-               id,
-               answer,
-               imagery: this.state.imageryText,
-               userId,
-               createdAt,
-               nextAttemptAt,
-               lastAttemptAt,
-               totalSuccessfulAttempts,
-               level,
-            },
+            payload: creatableCard,
          });
          // save to the database (make an API call)
          axios
