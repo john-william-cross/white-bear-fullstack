@@ -46,34 +46,37 @@ class ReviewImagery extends React.Component {
       const memoryCard = this.props.queue.cards[this.props.queue.index];
       return (
          <AppTemplate>
-            <div className="mb-5"></div>
+            {memoryCard && ( //ONLY IF THERE"S A MEMORY CARD, DO ALL THIS OTHER STUFF... DO THIS FOR ASK A TEACHER QUESTIONS PAGE?
+               <>
+                  <div className="mb-5"></div>
+                  <div className="card mb-5">
+                     <div className="card-body bg-primary lead">
+                        {memoryCard && memoryCard.imagery}
+                        {/* if this evaluates to true, do the second thing. if false, done. */}
+                     </div>
+                  </div>
+                  {this.props.queue.index > 0 && (
+                     <button
+                        className="btn btn-link"
+                        onClick={() => {
+                           this.goToPrevCard();
+                        }}
+                     >
+                        Previous card
+                     </button>
+                  )}
 
-            <div className="card mb-5">
-               <div className="card-body bg-primary lead">
-                  {memoryCard && memoryCard.imagery}
-                  {/* if this evaluates to true, do the second thing. if false, done. */}
-               </div>
-            </div>
-            {this.props.queue.index > 0 && (
-               <button
-                  className="btn btn-link"
-                  onClick={() => {
-                     this.goToPrevCard();
-                  }}
-               >
-                  Previous card
-               </button>
+                  <div className="float-right">
+                     <Link
+                        to="review-answer"
+                        type="button"
+                        className="btn btn-outline-primary"
+                     >
+                        Show Answer
+                     </Link>
+                  </div>
+               </>
             )}
-
-            <div className="float-right">
-               <Link
-                  to="review-answer"
-                  type="button"
-                  className="btn btn-outline-primary"
-               >
-                  Show Answer
-               </Link>
-            </div>
          </AppTemplate>
       );
    }
