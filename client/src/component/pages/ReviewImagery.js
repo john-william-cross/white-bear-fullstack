@@ -46,9 +46,10 @@ class ReviewImagery extends React.Component {
       const memoryCard = this.props.queue.cards[this.props.queue.index];
       return (
          <AppTemplate>
+            <div className="mb-5"></div>
+
             {memoryCard && ( //ONLY IF THERE"S A MEMORY CARD, DO ALL THIS OTHER STUFF... DO THIS FOR ASK A TEACHER QUESTIONS PAGE?
                <>
-                  <div className="mb-5"></div>
                   <div className="card mb-5">
                      <div className="card-body bg-primary lead">
                         {memoryCard && memoryCard.imagery}
@@ -76,6 +77,11 @@ class ReviewImagery extends React.Component {
                      </Link>
                   </div>
                </>
+            )}
+            {!memoryCard && (
+               <p className="lead text-muted text-center">
+                  You have 0 cards. Please create a card before reviewing.
+               </p>
             )}
          </AppTemplate>
       );
