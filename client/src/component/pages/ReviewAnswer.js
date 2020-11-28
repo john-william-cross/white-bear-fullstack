@@ -19,11 +19,8 @@ class ReviewAnswer extends React.Component {
    }
 
    updateCardWithGotIt(memoryCard) {
-      // Biz logic:
-      // increase successfulAttempts by 1
       const newMemoryCard = { ...memoryCard };
       newMemoryCard.totalSuccessfulAttempts += 1;
-      // update lastAttemptAt with today's date
       newMemoryCard.lastAttemptAt = Date.now();
 
       // db PUT this card in our axios request
