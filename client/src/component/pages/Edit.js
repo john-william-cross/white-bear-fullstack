@@ -88,13 +88,23 @@ class Edit extends React.Component {
    }
 
    deleteCard() {
-      // TODO: delete from database
-      if (this.props.editableCard.prevRoute === "/review-answer") {
-         this.deleteCardFromStore();
-      }
-      if (this.props.editableCard.prevRoute === "/all-cards") {
-         this.props.history.push("/all-cards");
-      }
+      const memoryCard = { ...this.props.editableCard.card };
+      // query db to delete card
+      axios
+         .delete(`/api/v1/memory-cards/${memoryCard.id}`)
+         .then(() => {
+            // TODO: display success overlay
+            if (this.props.editableCard.prevRoute === "/review-answer") {
+               this.deleteCardFromStore();
+            }
+            if (this.props.editableCard.prevRoute === "/all-cards") {
+               this.props.history.push("/all-cards");
+            }
+         })
+         .catch((err) => {
+            console.log(err);
+            // TODO: Display error overlay
+         });
    }
 
    deleteCardFromStore() {
