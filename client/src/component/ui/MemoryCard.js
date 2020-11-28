@@ -5,15 +5,17 @@ import { connect } from "react-redux";
 import actions from "../../store/actions";
 
 class MemoryCard extends React.Component {
-   storeEditableCard() {
+   storeEditableCard(memoryCard) {
       console.log("STORING EDITABLE CARD");
       this.props.dispatch({
          type: actions.STORE_EDITABLE_CARD,
-         payload: { card: this.props.card, prevRoute: "/all-cards" },
+         payload: { card: memoryCard, prevRoute: "/all-cards" },
       });
    }
 
    render() {
+      const memoryCard = this.props.queue.cards[this.props.queue.index];
+
       return (
          <div className="d-flex align-items-start mb-5">
             <div className="app-card flex-fill">
@@ -34,7 +36,7 @@ class MemoryCard extends React.Component {
                to="/edit"
                className="btn btn-link ml-4 d-flex mt-n2"
                onClick={() => {
-                  this.storeEditableCard();
+                  this.storeEditableCard(memoryCard);
                }}
             >
                <img
@@ -56,7 +58,9 @@ class MemoryCard extends React.Component {
 
 function mapStateToProps(state) {
    //Everything down here is global state
-   return {};
+   return {
+      queue: state.queue,
+   };
 }
 
 export default connect(mapStateToProps)(MemoryCard);
