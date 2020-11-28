@@ -7,4 +7,3 @@ const updateMemoryCard = `
         id = ?;  
 `;
 module.exports = updateMemoryCard;
-//

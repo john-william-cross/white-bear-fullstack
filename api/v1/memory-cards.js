@@ -133,7 +133,20 @@ router.put("/:id", validateJwt, (req, res) => {
          return res.status(400).json({ dbError });
       });
 });
-module.exports = router;
 
-//asdf
-//adf
+// @route       DELETE api/v1/memory_cards/:id
+// @desc        Delete a memory card from the memory cards resource by id
+// @access      Private
+router.delete("/:id", validateJwt, (req, res) => {
+   const id = req.params.id;
+   db.query(deleteMemoryCardById, id)
+      .then(() => {
+         return res.status(200).json({ success: "card deleted" });
+      })
+      .catch(() => {
+         console.log(err);
+         const dbError = `${err.code} ${err.sqlMessage}`;
+         return res.status(500).json({ dbError });
+      });
+});
+module.exports = router;

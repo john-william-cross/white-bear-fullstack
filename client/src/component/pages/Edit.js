@@ -92,7 +92,8 @@ class Edit extends React.Component {
       // query db to delete card
       axios
          .delete(`/api/v1/memory-cards/${memoryCard.id}`)
-         .then(() => {
+         .then((res) => {
+            console.log(res.data);
             // TODO: display success overlay
             if (this.props.editableCard.prevRoute === "/review-answer") {
                this.deleteCardFromStore();
@@ -102,7 +103,7 @@ class Edit extends React.Component {
             }
          })
          .catch((err) => {
-            console.log(err);
+            console.log(err.response.data);
             // TODO: Display error overlay
          });
    }
