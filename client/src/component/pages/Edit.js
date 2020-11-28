@@ -2,7 +2,6 @@ import React from "react";
 import AppTemplate from "../ui/AppTemplate";
 import saveIcon from "../../icons/save.svg";
 import { Link } from "react-router-dom";
-import memoryCards from "../../mock-data/memory-cards";
 import toDisplayDate from "date-fns/format";
 import classnames from "classnames";
 import { checkIsOver, MAX_CARD_CHARS } from "../../utils/helpers";
@@ -13,16 +12,14 @@ import without from "lodash/without";
 import actions from "../../store/actions";
 import axios from "axios";
 
-const memoryCard = memoryCards[3];
-
 class Edit extends React.Component {
    constructor(props) {
       super(props);
 
       console.log(`in the edit component`);
       this.state = {
-         answerText: memoryCard.answer,
-         imageryText: memoryCard.imagery,
+         answerText: this.props.editableCard.card.answer,
+         imageryText: this.props.editableCard.card.imagery,
          isShowingDeleteButton: false,
       };
    }
@@ -57,27 +54,28 @@ class Edit extends React.Component {
    }
 
    saveCard() {
-      // get this.state.answerText
-      // get this.state.imageryText
-      // put into the db
-      const memoryCard = { ...this.props.editableCard.card };
-      memoryCard.answer = this.state.answerText;
-      memoryCard.imagery = this.state.imageryText;
+      if (!this.checkHasInvalidCharCount()) {
+         const memoryCard = { ...this.props.editableCard.card };
+         memoryCard.answer = this.state.answerText;
+         memoryCard.imagery = this.state.imageryText;
 
-      // db PUT this card in our axios request
-      axios
-         .put(`/api/v1/memory-cards/${memoryCard.id}`, memoryCard)
-         .then(() => {
-            console.log("Memory card updated");
-            // TODO: on success, fire success overlay
+         // db PUT this card in our axios request
+         axios
+            .put(`/api/v1/memory-cards/${memoryCard.id}`, memoryCard)
+            .then(() => {
+               console.log("Memory card updated");
+               // TODO: on success, fire success overlay
 
-            this.props.history.push(this.props.editableCard.prevRoute);
-         })
-         .catch((err) => {
-            const { data } = err.response;
-            console.log(data);
-            // TODO: Display error overlay, hide error overlay after 5 seconds
-         });
+               this.props.history.push(this.props.editableCard.prevRoute);
+            })
+            .catch((err) => {
+               const { data } = err.response;
+               console.log(data);
+               // TODO: Display error overlay, hide error overlay after 5 seconds
+            });
+      } else {
+         console.log("INVALID");
+      }
    }
 
    deleteCard() {
