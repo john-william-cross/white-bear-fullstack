@@ -4,8 +4,9 @@ const router = express.Router();
 const db = require("../../db");
 const selectAllCards = require("../../queries/selectAllCards");
 const insertMemoryCard = require("../../queries/insertMemoryCards");
-const validateJwt = require("../../utils/validateJwt");
 const updateMemoryCard = require("../../queries/updateMemoryCard");
+const deleteMemoryCardById = require("../../queries/deleteMemoryCardById");
+const validateJwt = require("../../utils/validateJwt");
 
 // @route       GET api/v1/memory_cards
 // @desc        Get all memory cards for a user by search term and order

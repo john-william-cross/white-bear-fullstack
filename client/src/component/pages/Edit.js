@@ -94,9 +94,17 @@ class Edit extends React.Component {
          .delete(`/api/v1/memory-cards/${memoryCard.id}`)
          .then((res) => {
             console.log(res.data);
+            const deletedCard = this.props.editableCard.card;
+            const cards = this.props.queue.cards;
+            const filteredCards = without(cards, deletedCard);
             // TODO: display success overlay
             if (this.props.editableCard.prevRoute === "/review-answer") {
                this.deleteCardFromStore();
+               if (filteredCards[this.props.queue.index] === undefined) {
+                  this.props.history.push("/review-empty");
+               } else {
+                  this.props.history.push("/review-imagery");
+               }
             }
             if (this.props.editableCard.prevRoute === "/all-cards") {
                this.props.history.push("/all-cards");
@@ -109,19 +117,10 @@ class Edit extends React.Component {
    }
 
    deleteCardFromStore() {
-      const deletedCard = this.props.editableCard.card;
-      const cards = this.props.queue.cards;
-      const filteredCards = without(cards, deletedCard);
-      console.log(filteredCards);
       this.props.dispatch({
          type: actions.UPDATE_QUEUED_CARDS,
          payload: filteredCards,
       });
-      if (filteredCards[this.props.queue.index] === undefined) {
-         this.props.history.push("/review-empty");
-      } else {
-         this.props.history.push("/review-imagery");
-      }
    }
 
    render() {
