@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import isEmpty from "lodash/isEmpty";
 import without from "lodash/without";
 import actions from "../../store/actions";
-// import axios from "axios";
+import axios from "axios";
 
 const memoryCard = memoryCards[3];
 
@@ -54,6 +54,30 @@ class Edit extends React.Component {
    setAnswerText(e) {
       this.setState({ answerText: e.target.value });
       console.log(e.target.value);
+   }
+
+   saveCard() {
+      // get this.state.answerText
+      // get this.state.imageryText
+      // put into the db
+      const memoryCard = { ...this.props.editableCard.card };
+      memoryCard.answer = this.state.answerText;
+      memoryCard.imagery = this.state.imageryText;
+
+      // db PUT this card in our axios request
+      axios
+         .put(`/api/v1/memory-cards/${memoryCard.id}`, memoryCard)
+         .then(() => {
+            console.log("Memory card updated");
+            // TODO: on success, fire success overlay
+
+            this.props.history.push(this.props.editableCard.prevRoute);
+         })
+         .catch((err) => {
+            const { data } = err.response;
+            console.log(data);
+            // TODO: Display error overlay, hide error overlay after 5 seconds
+         });
    }
 
    deleteCard() {
@@ -151,8 +175,7 @@ class Edit extends React.Component {
                      >
                         Discard changes
                      </Link>
-                     <Link
-                        to={this.props.editableCard.prevRoute}
+                     <button
                         className={classnames(
                            "btn btn-primary btn-lg float-right",
                            {
@@ -160,6 +183,9 @@ class Edit extends React.Component {
                            }
                         )}
                         id="save-card"
+                        onClick={() => {
+                           this.saveCard();
+                        }}
                      >
                         <img
                            src={saveIcon}
@@ -172,7 +198,7 @@ class Edit extends React.Component {
                            }}
                         />
                         Save
-                     </Link>
+                     </button>
                   </div>
                   <p className="text-center lead text-muted my-2 mb-4">
                      Card properties
