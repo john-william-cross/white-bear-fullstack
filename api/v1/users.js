@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
          // create the user
          id,
          email,
-         password: await toHash(password), // await hash function because it takes a moment to has password
+         password: await toHash(password),
          created_at: createdAt,
       }; // now we have a user object ready to insert into the db
 
