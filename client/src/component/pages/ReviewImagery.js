@@ -82,6 +82,8 @@ class ReviewImagery extends React.Component {
                <p className="lead text-muted text-center">
                   You have 0 cards. Please create a card before reviewing.
                </p>
+
+               // ADD GET MORE CARDS BUTTON UNDER THIS!!!
             )}
          </AppTemplate>
       );
